@@ -1,0 +1,40 @@
+name: Basis Continuous Integration (CI)
+
+on:
+  push:
+    branches: [ main, development ]
+  pull_request:
+    branches: [ main, development ]
+# Allows you to run this workflow manually from the Actions tab
+  # workflow_dispatch:
+  
+jobs:
+  test-and-publish:
+    name: Main CI/CD flow
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+        
+      - name: Build docker image
+        run: docker build . -t coloring_webapp:latest
+
+      - name: Run Django tests
+        run: docker container run --rm -e command="python manage.py test" coloring_webapp:latest
+        
+      - name: Log in to Docker Hub
+        if: ${{ github.event_name == 'push' && steps.extract_branch.outputs.branch == 'main' }}
+        run: docker login --username=${{ secrets.DOCKERHUB_USERNAME }} --password=${{ secrets.DOCKERHUB_PASSWORD }}
+      
+      - name: Tag the built image
+        if: ${{ github.event_name == 'push' && steps.extract_branch.outputs.branch == 'main' }}
+        run: docker tag coloring_webapp:latest ${{ secrets.DOCKERHUB_USERNAME }}/coloring_webapp:latest
+
+      - name: Push to Docker hub
+        if: ${{ github.event_name == 'push' && steps.extract_branch.outputs.branch == 'main' }}
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/coloring_webapp:latest
