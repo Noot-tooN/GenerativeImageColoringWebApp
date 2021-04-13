@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 import requests
 import base64
-from PIL import Image, ImageOps
+from PIL import Image
 import io
 
 def home_page(request):
