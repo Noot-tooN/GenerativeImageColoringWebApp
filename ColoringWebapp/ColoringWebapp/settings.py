@@ -80,8 +80,12 @@ WSGI_APPLICATION = 'ColoringWebapp.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'colorization_db',
+        'USER': 'aleksa',
+        'PASSWORD': 'example_pass',
+        'HOST': '185.27.128.249',
+        'PORT': '5432',
     }
 }
 
