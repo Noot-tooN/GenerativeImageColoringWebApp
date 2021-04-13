@@ -9,7 +9,7 @@ RUN apt-get update
 # RUN apt-get install software-properties-common -y && \
 RUN apt-get install -y python-is-python3 python3-distutils curl python3-psycopg2 && \
     curl https://bootstrap.pypa.io/get-pip.py | python
-RUN pip install Django==3.2 djangorestframework
+RUN pip install Django==3.2 djangorestframework requests
 
 ADD ./ColoringWebapp /ColoringWebapp
 WORKDIR /ColoringWebapp

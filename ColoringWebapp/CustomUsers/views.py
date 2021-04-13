@@ -44,7 +44,21 @@ def register_view(request):
 
 @login_required()
 def profile_view(request):
-    return render(request, "profile.html", {})
+    if request.method == "GET":
+        return render(request, "profile.html", {})
+    else:
+        new_permission_lvl = request.POST.get("new_permission_level", "")
+        if new_permission_lvl == "" or int(new_permission_lvl) < 0 or int(new_permission_lvl) >2:
+            return render(request, "profile.html", {"profile_err_status": "Invalid value for permission level!"})
+        
+        user = CustomUser.objects.filter(email=request.user.email)[0]
+
+        if int(new_permission_lvl) == int(user.permission_level):
+            return render(request, "profile.html", {"profile_err_warning": "Permission is already at the same level!"})
+
+        user.permission_level = new_permission_lvl
+        user.save()
+        return redirect("profile_view")
 
 @login_required()
 def logout_view(request):

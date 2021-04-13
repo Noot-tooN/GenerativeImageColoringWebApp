@@ -3,11 +3,26 @@
 {% block body_content %}
 
 <div>
+    {% if profile_err_status %}
+    <div class="alert alert-danger" role="alert">
+        {{ profile_err_status }}
+    </div>
+    {% endif %}
+    {% if profile_err_warning %}
+    <div class="alert alert-warning" role="alert">
+        {{ profile_err_warning }}
+    </div>
+    {% endif %}
     <h1>{{ request.user }}</h1>
     <div>
         <p>Current permission level {{ request.user.permission_level }}</p>
         <form method="POST" name="loginForm">
-            <button type="submit">Update</button>            
+            {% csrf_token %}
+            <div class="form-group row">
+                <label for="new_permission_level col-2">New permission level</label>
+                <input class="form-control col-4" type="number" min="0" max="2" id="new_permission_level" value="{{ request.user.permission_level }}" name="new_permission_level"/>
+                <button class="register-button btn btn-primary col-2" type="submit">Update</button>    
+            </div>
         </form>
     </div>
 </div>

@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block body_content %}
+
+<h1>Colorization</h1>
+{% if colorization_err_status %}
+<div class="alert alert-danger" role="alert">
+    {{ colorization_err_status }}
+</div>
+{% endif %}
+<h2>Test our colorization system by providing either colored or black and white image.</h2>
+<div style="width: 40%; margin-bottom: 20px;">
+    <input accept="image/*" type="file" class="form-control" id="customImage" />
+</div>
+<form method="POST" style="width: 100%; height: 500px; display: flex; flex-direction: column;">
+    {% csrf_token %}
+    <div style="width: 100%; height: 500px; display: flex;">
+        <div class="colorization_image_holder">
+            <h2>Selected image</h2>
+            <input id="image_for_colorization" name="image_for_colorization" type="hidden" 
+            {% if not original_image %} value=""
+            {% else %} value={{ original_image }}
+            {% endif %}
+            value/>
+            <img class="colorization_images" 
+                {% if not original_image %}src="https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png"
+                {% else %}src={{ original_image }}
+                {% endif %} id="selectedImage"/>
+        </div>
+        <div class="colorization_image_holder">
+            <h2>Black-white image</h2>
+            <img class="colorization_images" 
+                {% if not gray_image %}src="https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png"
+                {% else %}src={{ gray_image }}
+                {% endif %} id="grayImage"/>
+        </div>
+        <div class="colorization_image_holder">
+            <h2>Generated image</h2>
+            <img class="colorization_images" 
+                {% if not generated_image %}src="https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png"
+                {% else %}src={{ generated_image }}
+                {% endif %} id="generatedImage"/>
+        </div>
+    </div>
+    <div style="display: flex; justify-content: center;">
+        <button id="colorization_button" type="submit" class="btn btn-primary register-button 
+        {% if not original_image %}disabled{% endif %}
+        ">Colorize the image</button>
+    </div>
+</form>
+
+
+<script>
+    document.getElementById("customImage").onchange = (evt) => {
+        let tgt = evt.target;
+        selectedImage = tgt.files[0];
+        let reader = new FileReader();
+
+        let selImg = document.getElementById("selectedImage");
+        let hidVal = document.getElementById("image_for_colorization");
+        let hidValBytes = document.getElementById("image_for_colorization_bytes");
+
+        let colorization_button = document.getElementById("colorization_button");
+        selImg.title = selectedImage.name;
+
+        reader.onload = function(event) {
+            selImg.src = event.target.result;
+            hidVal.value = event.target.result;
+            colorization_button.classList.remove("disabled");
+        };
+
+        reader.readAsDataURL(selectedImage);
+    }
+</script>
+{% endblock %}

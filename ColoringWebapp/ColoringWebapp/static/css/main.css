@@ -17,11 +17,12 @@
     color: var(--portland-orange) !important;
 }
 
-.navbar-nav a {
+a:not(.navbar-brand) {
+    text-decoration: none !important;
     position: relative;
 }
 
-.navbar-nav a::after {
+a:not(.navbar-brand)::after {
     content: '';
     position: absolute;
     left: 0px;
@@ -34,7 +35,7 @@
     transition: transform 250ms ease-in;
 }
 
-.navbar-nav a:hover::after {
+a:not(.navbar-brand):hover::after {
     transform-origin: left;
     transform: scaleX(1);
 }
@@ -56,4 +57,20 @@
 .registration-form {
     width: 40%;
     height: 40%;
+}
+
+.colorization_images {
+    max-height: 400px;
+    max-width: 80%;
+}
+
+.colorization_image_holder {
+    display: flex;
+    /* justify-content: center; */
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+    background: #D3CCE3;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #E9E4F0, #D3CCE3);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #E9E4F0, #D3CCE3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }

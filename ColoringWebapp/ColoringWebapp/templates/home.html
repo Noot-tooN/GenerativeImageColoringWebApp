@@ -2,6 +2,18 @@
 
 {% block body_content %}
 
-<h1>From home.html</h1>
+<h1>Check out some of our colorizations!</h1>
+<div>
+    <!-- Add some colored images here once you color them -->
+</div>
+<h1>Wanna try it yourself?</h1>
+{% if request.user.is_authenticated %}
+<div>Go to <a href="#">colorization</a> page.</div>
+{% else %}
+<div style="text-align: center;">
+    <p>Please log in to participate! <a href="{% url 'login_view' %}">Log in</a></p>
+    <p>Need an account? Register for free! <a href="{% url 'register_view' %}">Register</a></p>
+</div>
+{% endif %}
 
 {% endblock %}
