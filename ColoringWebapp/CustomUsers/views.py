@@ -19,6 +19,10 @@ def login_view(request):
             return render(request, "login.html", {"login_err_status": "Invalid credentials!"})
         
         login(request, user)
+        
+        if 'next' in request.GET:
+            return redirect(request.GET.get("next"))
+
         return redirect("home_page")
 
 def register_view(request):
@@ -38,11 +42,11 @@ def register_view(request):
 
         return render(request, "register.html", {"register_status": "Successfully registered! You can login now!"})
 
-@login_required(redirect_field_name='login.html')
+@login_required()
 def profile_view(request):
     return render(request, "profile.html", {})
 
-@login_required(redirect_field_name='login.html')
+@login_required()
 def logout_view(request):
     logout(request)
     return redirect("home_page")

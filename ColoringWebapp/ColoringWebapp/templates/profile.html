@@ -2,6 +2,14 @@
 
 {% block body_content %}
 
-<h1>From profile.html</h1>
+<div>
+    <h1>{{ request.user }}</h1>
+    <div>
+        <p>Current permission level {{ request.user.permission_level }}</p>
+        <form method="POST" name="loginForm">
+            <button type="submit">Update</button>            
+        </form>
+    </div>
+</div>
 
 {% endblock %}
