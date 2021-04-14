@@ -1,3 +1,14 @@
+body {
+    background-image: var(--gradient);
+    background-size: 300%;
+    animation: bg-animation 10s infinite alternate;
+}
+
+@keyframes bg-animation {
+    0% {background-position-x: -200px;}
+    100% {background-position-x: 0px;}
+}
+
 .navbar {
     background-color: var(--steel-blue);
     margin-bottom: 1em;
