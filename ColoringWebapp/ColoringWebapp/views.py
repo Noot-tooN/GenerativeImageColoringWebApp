@@ -6,7 +6,15 @@ from PIL import Image
 import io
 
 def home_page(request):
-    return render(request, "home.html", {})
+    return render(request, "home.html", {"carousel_items": [
+        {"bw_image": "cherry_tree_bw.jpeg", "image": "cherry_tree.jpeg", "original_link": "https://treesunlimitednj.com/wp-content/uploads/planting-cherry-tree.jpg"},
+        {"bw_image": "doggy_bw.jpeg", "image": "doggy.jpeg", "original_link": "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F28%2F2020%2F10%2F13%2Fcorgi-dog-POPDOGNAME1020.jpg"},
+        {"bw_image": "horsey_bw.jpeg", "image": "horsey.jpeg", "original_link": "https://www.lifepixel.com/wp-content/uploads/2017/08/Grayscale-Conversion-Lightroom.jpg"},
+        {"bw_image": "woman_field_bw.jpeg", "image": "woman_field.jpeg", "original_link": "https://images.unsplash.com/photo-1561709316-d1bc557d47de?ixid=MXwxMjA3fDB8MHxzZWFyY2h8Nnx8d29tYW4lMjBpbiUyMGZsb3dlciUyMGZpZWxkfGVufDB8fDB8&ixlib=rb-1.2.1&w=1000&q=80"},
+        {"bw_image": "venice_bw.jpeg", "image": "venice.jpeg", "original_link": "https://thumbs.dreamstime.com/b/canal-de-venise-et-gondole-bateaux-du-pont-rialto-en-noir-blanc-111434192.jpg"},
+        {"bw_image": "doggy2_bw.jpeg", "image": "doggy2.jpeg", "original_link": "https://www.maxpixel.net/static/photo/1x/Animal-Pet-Grayscale-Dog-5423577.jpg"},
+        {"bw_image": "tree_bw.jpeg", "image": "tree.jpeg", "original_link": "https://res.cloudinary.com/jerrick/image/upload/c_scale,q_auto/5e2e0380084ba2001cc211d2.jpg"},
+    ]})
 
 @login_required()
 def colorization_page(request):

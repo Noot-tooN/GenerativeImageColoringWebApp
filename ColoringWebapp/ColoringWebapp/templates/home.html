@@ -2,18 +2,40 @@
 
 {% block body_content %}
 
-<h1>Check out some of our colorizations!</h1>
-<div>
-    <!-- Add some colored images here once you color them -->
-</div>
-<h1>Wanna try it yourself?</h1>
-{% if request.user.is_authenticated %}
-<div>Go to <a href="#">colorization</a> page.</div>
-{% else %}
-<div style="text-align: center;">
-    <p>Please log in to participate! <a href="{% url 'login_view' %}">Log in</a></p>
-    <p>Need an account? Register for free! <a href="{% url 'register_view' %}">Register</a></p>
-</div>
-{% endif %}
+{% load static %}
+{% get_static_prefix as STATIC_URL %}
 
-{% endblock %}
+<script src="{% static 'js/flickity.pkgd.min.js' %}"></script>
+
+<h1>Check out some of our colorizations!</h1>
+<div class="d-flex" style="width: 100%; height: 500px; align-items: center; justify-content: center;">
+    <di style="width: 80%;" class="gallery js-flickity" data-flickity-options='{ "wrapAround": true }'>
+        {% for carousel_item in carousel_items %}
+        <div class="gallery-cell" >
+            <div class="card" style="display: flex; justify-content: center; align-items: center; width: 90%; height: 90%;">
+                <div class="card-body" style="height: 85%; display: flex; justify-content: center; align-items: center;" >
+                  <img src="{{ STATIC_URL }}/images/homepage/{{ carousel_item.bw_image }}" />
+                  <img style="margin-left: 20px; margin-right: 20px;" height="50px" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pg0KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE2LjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPg0KPCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjEvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCINCgkgd2lkdGg9IjI2OC44MzJweCIgaGVpZ2h0PSIyNjguODMycHgiIHZpZXdCb3g9IjAgMCAyNjguODMyIDI2OC44MzIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDI2OC44MzIgMjY4LjgzMjsiDQoJIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPGc+DQoJPHBhdGggZD0iTTI2NS4xNzEsMTI1LjU3N2wtODAtODBjLTQuODgxLTQuODgxLTEyLjc5Ny00Ljg4MS0xNy42NzgsMGMtNC44ODIsNC44ODItNC44ODIsMTIuNzk2LDAsMTcuNjc4bDU4LjY2MSw1OC42NjFIMTIuNQ0KCQljLTYuOTAzLDAtMTIuNSw1LjU5Ny0xMi41LDEyLjVjMCw2LjkwMiw1LjU5NywxMi41LDEyLjUsMTIuNWgyMTMuNjU0bC01OC42NTksNTguNjYxYy00Ljg4Miw0Ljg4Mi00Ljg4MiwxMi43OTYsMCwxNy42NzgNCgkJYzIuNDQsMi40MzksNS42NCwzLjY2MSw4LjgzOSwzLjY2MXM2LjM5OC0xLjIyMiw4LjgzOS0zLjY2MWw3OS45OTgtODBDMjcwLjA1MywxMzguMzczLDI3MC4wNTMsMTMwLjQ1OSwyNjUuMTcxLDEyNS41Nzd6Ii8+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8L3N2Zz4NCg==" />
+                  <img src="{{ STATIC_URL }}/images/homepage/{{ carousel_item.image }}" />
+                </div>
+                <div class="card-body" style="height: 15%;">
+                    <a class="custom_link" href="{{ carousel_item.original_link }}">Original image</a>
+                </div>
+              </div>              
+        </div>
+        {% endfor %}
+    </div>
+    <hr style="margin-top: 40px;" />
+    <h1>Wanna try it yourself?</h1>
+    {% if request.user.is_authenticated %}
+    <div>Go to <a class="custom_link" href="{% url 'colorization_page' %}">colorization</a> page.</div>
+    {% else %}
+    <div style="text-align: center;">
+        <p>Please log in to participate! <a class="custom_link" href="{% url 'login_view' %}">Log in</a></p>
+        <p>Need an account? Register for free! <a class="custom_link" href="{% url 'register_view' %}">Register</a></p>
+    </div>
+    {% endif %}
+    
+    {% endblock %}
+</div>
+
