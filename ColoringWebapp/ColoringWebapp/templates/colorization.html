@@ -55,9 +55,9 @@
     <div style="display: flex; justify-content: center;">
         <label style="margin-top: 25px; margin-right: 20px;" for="network_select">Network selection</label>
         <select name="network_select" style="width: 200px; margin-top: 20px; margin-right: 20px;" class="form-select form-select-sm">
-            <option value="0">Worst net</option>
-            <option value="1">Better net</option>
-            <option value="2" selected>Best net</option>
+            <option value="0" {% if selected_permission_level == "0" %} selected {% endif %}>Worst net</option>
+            <option value="1" {% if selected_permission_level == "1" %} selected {% endif %}>Better net</option>
+            <option value="2" {% if selected_permission_level == "2" %} selected {% endif %}>Best net</option>
         </select>
         <button id="colorization_button" type="submit" class="btn btn-primary register-button 
         {% if not original_image %}disabled{% endif %}
