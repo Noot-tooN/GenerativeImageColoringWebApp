@@ -22,6 +22,7 @@
             {% else %} value={{ original_image }}
             {% endif %}
             value/>
+            <input type="hidden" name="picture_dimensions" id="picture_dimensions"/>
             <img class="colorization_images" 
                 {% if not original_image %}src="https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png"
                 {% else %}src={{ original_image }}
@@ -30,6 +31,8 @@
         <div class="colorization_image_holder">
             <h2>Black-white image</h2>
             <img class="colorization_images" 
+                {% if picture_width %} width="{{ picture_width }}"{% endif %}
+                {% if picture_height %} height="{{ picture_height }}"{% endif %}
                 {% if not gray_image %}src="https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png"
                 {% else %}src={{ gray_image }}
                 {% endif %} id="grayImage"/>
@@ -37,6 +40,8 @@
         <div class="colorization_image_holder">
             <h2>Generated image</h2>
             <img class="colorization_images" 
+                {% if picture_width %} width="{{ picture_width }}"{% endif %}
+                {% if picture_height %} height="{{ picture_height }}"{% endif %}
                 {% if not generated_image %}src="https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png"
                 {% else %}src={{ generated_image }}
                 {% endif %} id="generatedImage"/>
@@ -58,14 +63,19 @@
 
         let selImg = document.getElementById("selectedImage");
         let hidVal = document.getElementById("image_for_colorization");
-        let hidValBytes = document.getElementById("image_for_colorization_bytes");
-
+        let picture_dimensions = document.getElementById("picture_dimensions");
+        
         let colorization_button = document.getElementById("colorization_button");
         selImg.title = selectedImage.name;
 
         reader.onload = function(event) {
-            selImg.src = event.target.result;
             hidVal.value = event.target.result;
+            selImg.onload = () => {
+                picture_dimensions.value = selImg.width + "x" + selImg.height;
+            }
+
+            selImg.src = event.target.result;
+
             colorization_button.classList.remove("disabled");
         };
 

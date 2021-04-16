@@ -25,6 +25,13 @@ def colorization_page(request):
         if image == "":
             return render(request, "colorization.html", {"colorization_err_status": "Invalid image!"})
 
+        picture_width = ""
+        picture_height = ""
+        picture_dimensions = request.POST.get("picture_dimensions", "")
+        if picture_dimensions:
+            picture_width = picture_dimensions.split("x")[0]
+            picture_height = picture_dimensions.split("x")[1]
+
         cut_image = image.split(",")
         bajts = base64.b64decode(cut_image[1])
 
@@ -46,4 +53,5 @@ def colorization_page(request):
         gray_image = base64.b64encode(converted_bytes)
         gray_image = "data:image/jpeg;base64," + gray_image.decode("utf-8")
 
-        return render(request, "colorization.html", {"generated_image": encoded_image, "gray_image": gray_image, "original_image": image})
+        return render(request, "colorization.html", {"generated_image": encoded_image, "gray_image": gray_image, "original_image": image,
+                        "picture_width": picture_width, "picture_height": picture_height})
