@@ -38,7 +38,7 @@ def colorization_page(request):
         cut_image = image.split(",")
         bajts = base64.b64decode(cut_image[1])
 
-        base_url = "http://92.60.234.157/api/"
+        base_url = "http://92.60.234.157:8080/api/"
         files = {'black-white-photo': bajts}
         # data = {"permission_level": request.user.permission_level}
         data = {"permission_level": int(selected_permission_level)}
