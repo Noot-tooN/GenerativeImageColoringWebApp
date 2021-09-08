@@ -26,8 +26,7 @@ SECRET_KEY = 'django-insecure-fdqxg&r0m1jshwfx299u2u5llopj_fzxd3ur_hi2)tx50redqu
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["192.168.0.108", "185.27.128.249"]
-
+ALLOWED_HOSTS = ["192.168.0.120", "92.60.234.157"]
 
 # Application definition
 
@@ -88,7 +87,7 @@ DATABASES = {
         'NAME': 'colorization_db',
         'USER': 'aleksa',
         'PASSWORD': 'example_pass',
-        'HOST': '185.27.128.249',
+        'HOST': '92.60.234.157',
         'PORT': '5432',
     }
 }
