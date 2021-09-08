@@ -8,6 +8,9 @@
     {{ colorization_err_status }}
 </div>
 {% endif %}
+<script>
+    let select_mapping = ["Worst net", "Better net", "Best net"];
+</script>
 <h2>Test our colorization system by providing either colored or black and white image.</h2>
 <div style="width: 40%; margin-bottom: 20px;">
     <input accept="image/*" type="file" class="form-control" id="customImage" />
@@ -22,7 +25,9 @@
             {% else %} value={{ original_image }}
             {% endif %}
             value/>
-            <input type="hidden" name="picture_dimensions" id="picture_dimensions"/>
+            <input type="hidden" name="picture_dimensions" id="picture_dimensions"
+            {% if picture_dimensions %}value={{ picture_dimensions }} {% endif %}
+            />
             <img class="colorization_images" 
                 {% if not original_image %}src="https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png"
                 {% else %}src={{ original_image }}
@@ -48,6 +53,12 @@
         </div>
     </div>
     <div style="display: flex; justify-content: center;">
+        <label style="margin-top: 25px; margin-right: 20px;" for="network_select">Network selection</label>
+        <select name="network_select" style="width: 200px; margin-top: 20px; margin-right: 20px;" class="form-select form-select-sm">
+            <option value="0" {% if selected_permission_level == "0" %} selected {% endif %}>Worst net</option>
+            <option value="1" {% if selected_permission_level == "1" %} selected {% endif %}>Better net</option>
+            <option value="2" {% if selected_permission_level == "2" %} selected {% endif %}>Best net</option>
+        </select>
         <button id="colorization_button" type="submit" class="btn btn-primary register-button 
         {% if not original_image %}disabled{% endif %}
         ">Colorize the image</button>

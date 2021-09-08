@@ -21,9 +21,11 @@ def colorization_page(request):
     if request.method == "GET":
         return render(request, "colorization.html", {})
     else:
+        selected_permission_level = request.POST.get("network_select", "")
+
         image = request.POST.get("image_for_colorization", "")
         if image == "":
-            return render(request, "colorization.html", {"colorization_err_status": "Invalid image!"})
+            return render(request, "colorization.html", {"colorization_err_status": "Invalid image!", "selected_permission_level": selected_permission_level})
 
         picture_width = ""
         picture_height = ""
@@ -31,17 +33,20 @@ def colorization_page(request):
         if picture_dimensions:
             picture_width = picture_dimensions.split("x")[0]
             picture_height = picture_dimensions.split("x")[1]
+        
 
         cut_image = image.split(",")
         bajts = base64.b64decode(cut_image[1])
 
-        base_url = "http://185.27.128.249:8080/api/"
+        base_url = "http://92.60.234.157/api/"
         files = {'black-white-photo': bajts}
-        data = {"permission_level": request.user.permission_level}
+        # data = {"permission_level": request.user.permission_level}
+        data = {"permission_level": int(selected_permission_level)}
 
         my_response = requests.post(base_url + "color_image/", files=files, data=data)
         if not my_response.ok:
-            return render(request, "colorization.html", {"colorization_err_status": "Failed to upload the image!", "original_image": image})
+            return render(request, "colorization.html", {"colorization_err_status": "Failed to upload the image!", "original_image": image, "picture_dimensions": picture_dimensions,
+            "selected_permission_level": selected_permission_level})
         
         encoded_image = base64.b64encode(my_response.content)
         encoded_image = "data:image/jpeg;base64," + encoded_image.decode("utf-8")
@@ -54,4 +59,5 @@ def colorization_page(request):
         gray_image = "data:image/jpeg;base64," + gray_image.decode("utf-8")
 
         return render(request, "colorization.html", {"generated_image": encoded_image, "gray_image": gray_image, "original_image": image,
-                        "picture_width": picture_width, "picture_height": picture_height})
+                        "picture_width": picture_width, "picture_height": picture_height, "picture_dimensions": picture_dimensions,
+                        "selected_permission_level": selected_permission_level})
